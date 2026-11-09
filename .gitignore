@@ -1,0 +1,26 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Android build outputs & Keystores (Slide 15 - Bonus Release)
+app/build/
+*.jks
+*.keystore
+*.apk
+*.aab
+
+# Cours & Documents personnels
+*.pdf
+RecordPWA/

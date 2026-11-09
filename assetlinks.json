@@ -1,0 +1,22 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.netlify.warm_faun_5052e9.twa",
+      "sha256_cert_fingerprints": [
+        "47:50:89:DC:7E:66:F4:34:E0:DC:03:EC:95:31:C0:CB:47:95:5D:11:7C:3A:35:2A:22:0D:93:96:E4:CB:73:66"
+      ]
+    }
+  },
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.recordvoice",
+      "sha256_cert_fingerprints": [
+        "87:2F:00:AF:9C:72:C1:B9:D0:62:F5:0B:F4:DF:C4:0B:53:E4:7F:DC:F1:F0:C4:87:C8:8A:81:80:59:D3:DC:6D"
+      ]
+    }
+  }
+]

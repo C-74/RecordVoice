@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "884288234478",
+    "project_id": "record-voice-b62a9",
+    "storage_bucket": "record-voice-b62a9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884288234478:android:f3c040d79b4a0d0221e4ff",
+        "android_client_info": {
+          "package_name": "com.example.recordvoice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwLUx2c2cLAxg5TcVRi0LnDzD7IADQRw8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

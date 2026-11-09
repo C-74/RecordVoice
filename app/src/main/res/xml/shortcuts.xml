@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="static_new_recording"
+        android:enabled="true"
+        android:icon="@drawable/ic_shortcut_mic"
+        android:shortcutShortLabel="@string/shortcut_new_record_short"
+        android:shortcutLongLabel="@string/shortcut_new_record_long"
+        android:shortcutDisabledMessage="@string/shortcut_new_record_disabled">
+        <intent
+            android:action="com.example.recordvoice.ACTION_START_RECORDING"
+            android:targetPackage="com.example.recordvoice"
+            android:targetClass="com.example.recordvoice.MainActivity" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>
