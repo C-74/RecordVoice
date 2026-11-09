@@ -9,9 +9,11 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -120,7 +122,8 @@ fun RecordVoiceScreen(
     onRequestRecordWithPermission: () -> Unit,
     onRequestNotificationPermission: () -> Unit,
     onOpenAppSettings: () -> Unit,
-    onShareRecording: (RecordingEntity) -> Unit
+    onShareRecording: (RecordingEntity) -> Unit,
+    onCopyFcmToken: () -> Unit = {}
 ) {
     val selectedTab by viewModel.selectedTab.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
@@ -195,6 +198,7 @@ fun RecordVoiceScreen(
                             statusMessage = statusMessage,
                             micPermissionBanner = micPermissionBanner,
                             onToggleNotifications = onRequestNotificationPermission,
+                            onCopyFcmToken = onCopyFcmToken,
                             onRecordClick = onRequestRecordWithPermission,
                             onStopClick = { viewModel.stopRecording() },
                             onOpenAppSettings = onOpenAppSettings,
@@ -272,6 +276,7 @@ fun RecordVoiceScreen(
                         statusMessage = statusMessage,
                         micPermissionBanner = micPermissionBanner,
                         onToggleNotifications = onRequestNotificationPermission,
+                        onCopyFcmToken = onCopyFcmToken,
                         onRecordClick = onRequestRecordWithPermission,
                         onStopClick = { viewModel.stopRecording() },
                         onOpenAppSettings = onOpenAppSettings,
@@ -458,7 +463,7 @@ private fun TabPillButton(
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun RecorderStudioPane(
     isOnline: Boolean,
@@ -469,6 +474,7 @@ private fun RecorderStudioPane(
     statusMessage: String,
     micPermissionBanner: PermissionBannerState,
     onToggleNotifications: () -> Unit,
+    onCopyFcmToken: () -> Unit = {},
     onRecordClick: () -> Unit,
     onStopClick: () -> Unit,
     onOpenAppSettings: () -> Unit,
@@ -521,9 +527,14 @@ private fun RecorderStudioPane(
                         }
                     }
 
-                    // Bouton Notifications
+                    // Bouton Notifications (clic = activer / permission, appui long = copier le jeton FCM pour tester depuis Firebase)
                     Surface(
-                        onClick = onToggleNotifications,
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(50))
+                            .combinedClickable(
+                                onClick = onToggleNotifications,
+                                onLongClick = onCopyFcmToken
+                            ),
                         color = if (notificationsEnabled) CoralSoftBg else Color(0xFFF8FAFC),
                         shape = RoundedCornerShape(50),
                         border = BorderStroke(1.dp, if (notificationsEnabled) CoralSoftBorder else BorderSubtle)

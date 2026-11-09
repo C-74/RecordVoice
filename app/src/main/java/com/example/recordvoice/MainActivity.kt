@@ -171,6 +171,9 @@ class MainActivity : ComponentActivity() {
                         } else {
                             viewModel.emitToast("Impossible de partager ce fichier audio")
                         }
+                    },
+                    onCopyFcmToken = {
+                        fetchAndCopyFcmToken()
                     }
                 )
             }
@@ -195,6 +198,29 @@ class MainActivity : ComponentActivity() {
             }
             val token = task.result ?: return@addOnCompleteListener
             Log.d(RecordVoiceMessagingService.TAG, "Jeton FCM : $token")
+
+            lifecycleScope.launch {
+                UserPreferencesRepository(applicationContext).saveFcmToken(token)
+            }
+        }
+    }
+
+    /**
+     * Récupère le jeton Firebase Cloud Messaging actuel, le copie directement dans le presse-papiers,
+     * met à jour DataStore et affiche un Toast de confirmation.
+     */
+    private fun fetchAndCopyFcmToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful || task.result == null) {
+                Log.w(RecordVoiceMessagingService.TAG, "Impossible de récupérer le jeton FCM", task.exception)
+                viewModel.emitToast("Impossible de récupérer le jeton FCM")
+                return@addOnCompleteListener
+            }
+            val token = task.result
+            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            clipboard.setPrimaryClip(ClipData.newPlainText("FCM Token", token))
+            viewModel.emitToast("Jeton FCM copié dans le presse-papiers !")
+            Log.d(RecordVoiceMessagingService.TAG, "Jeton FCM copié : $token")
 
             lifecycleScope.launch {
                 UserPreferencesRepository(applicationContext).saveFcmToken(token)
